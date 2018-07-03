@@ -6,13 +6,23 @@ export default class Warden {
         this.day = date.getDate();
     }
 
-    watch () {
-        setInterval(this.check, 1000 * 60);
+    watch (reporter) {
+        let date = new Date();
+        this.day = date.getDate();
+        this.reporter = reporter;
+        setInterval(this.check, 1000 * 77);
     }
 
     async check() {
         let date = new Date();
         if (date.getDay() == 6 || date.getDay() == 0) return;
+
+        if (process.env.AUTO_REPORTING 
+            && typeof this.reporter == 'function'
+            && date.getHours() == process.env.REPORT_HOUR 
+            && date.getMinutes() == 0)
+            this.reporter();
+
 
         let day = date.getDate();
         if (day == this.day) return;

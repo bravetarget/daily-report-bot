@@ -1,5 +1,3 @@
-require('dotenv').load();
-
 var Discord = require("discord.js");
 import Character from './models/character';
 import Command from './models/command';
@@ -15,7 +13,7 @@ db.init = async () => {
     let res = await Character.allCharacters(); 
     console.log(res);
 
-    warden.watch();
+    warden.watch(report);
 }
 
 const commands = [
@@ -59,7 +57,7 @@ const commands = [
 function help (msg) {
     let res = `COMMANDS:\n`;
     Object.keys(commands).forEach(key => {
-        res += `!${commands[key].name} : ${commands[key].description}\n`;
+        res += `${commands[key].name} : ${commands[key].description}\n`;
     });
 
     res += "👋"
@@ -84,6 +82,7 @@ async function daily (msg, info) {
 }
 
 async function report (msg) {
+    const channel = (msg) ? msg.channel : bot.channels.get(process.env.REPORT_CHANNEL)
     var res = 'REPORT:\n';
 
     let chars = await Character.allCharacters();
@@ -94,11 +93,10 @@ async function report (msg) {
         if (!char.data.enlisted) return true;
 
         res += `**${char.data.name}** _Level ${char.data.level}_ - ` + 
-        `Contributions: ${char.data.contributions} - Daily Streak **${char.data.streak}x** - (_${char.data.demerits} Demerits_)\n    > Last Update: ${char.data.latest_update}\n`;
+        `Contributions: ${char.data.contributions} - Daily Streak **${char.data.streak}x** - (_${char.data.demerits} days missed_) ${char.data.total_xp} xp\n    > Last Update: ${char.data.latest_update}\n`;
     });
 
-    if (msg.channel) msg.channel.send(res);
-    else console.log(res);
+    channel.send(res);
 }
 
 async function enlist (msg) {
@@ -214,4 +212,4 @@ bot.on('ready', function () {
      console.log('Bot is now active.');
 });
 
-bot.login(process.env.TOKEN);
+bot.login("NDYxNjc4NjY2MzMwNDA2OTIy.DhW3YQ.lkmINsnj7qOvpTupOoSrWGNWUJg");
