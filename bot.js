@@ -87,13 +87,18 @@ async function report (msg) {
 
     let chars = await Character.allCharacters();
 
+    const formattedNumber = (amt, len) => {
+        if (!amt) return '0';
+        return `${parseFloat(amt).toFixed(len || 0).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    }
+
     Object.keys(chars).forEach(key => {
         let char = new Character(chars[key]);
 
         if (!char.data.enlisted) return true;
 
-        res += `**${char.data.name}** _Level ${char.data.level}_ - ` + 
-        `Contributions: ${char.data.contributions} - Daily Streak **${char.data.streak}x** - (_${char.data.demerits} days missed_) ${char.data.total_xp} xp\n    > Last Update: ${char.data.latest_update}\n`;
+        res += `**${char.data.name}** _Level ${char.data.level}_ -- ` + 
+        `Dailies: ${char.data.contributions} total -- Streak **${char.data.streak}x** -- (_${char.data.demerits} days missed_) ${formattedNumber(char.data.total_xp)} xp\n    > Last Update: _${char.data.latest_update}_\n`;
     });
 
     channel.send(res);
