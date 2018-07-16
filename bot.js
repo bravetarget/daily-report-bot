@@ -99,8 +99,8 @@ async function report (msg) {
 
         if (!char.data.enlisted) return true;
 
-        res += `**${char.data.name}** _Level ${char.data.level}_ -- ` + 
-        `Dailies: ${char.data.contributions} total -- Streak **${char.data.streak}x** -- (_${char.data.demerits} days missed_) ${formattedNumber(char.data.total_xp)} xp\n    > Last Update: _${char.data.latest_update}_\n`;
+        res += `**${char.data.name}** _Level ${char.data.level}_ — ` + 
+        `Dailies: ${char.data.contributions} total — Streak **${char.data.streak}x** — (_${char.data.demerits} days missed_) ${formattedNumber(char.data.total_xp)} xp\n    > Last Update: _${char.data.latest_update}_\n`;
     });
 
     channel.send(res);
