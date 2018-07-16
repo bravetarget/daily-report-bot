@@ -1,3 +1,5 @@
+require('dotenv').load();
+
 var Discord = require("discord.js");
 import Character from './models/character';
 import Command from './models/command';
@@ -217,4 +219,4 @@ bot.on('ready', function () {
      console.log('Bot is now active.');
 });
 
-bot.login("NDYxNjc4NjY2MzMwNDA2OTIy.DhW3YQ.lkmINsnj7qOvpTupOoSrWGNWUJg");
+bot.login(process.env.TOKEN);
