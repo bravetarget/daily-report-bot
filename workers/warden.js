@@ -10,7 +10,7 @@ export default class Warden {
         let date = new Date();
         this.day = date.getDate();
         this.reporter = reporter;
-        setInterval(this.check, 1000 * 77);
+        setInterval(() => { this.check(); }, 1000 * 77);
     }
 
     async check() {
