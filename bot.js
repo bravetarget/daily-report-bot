@@ -57,12 +57,12 @@ const commands = [
 ];
 
 function help (msg) {
-    let res = `COMMANDS:\n`;
+    let res = '```css\nCOMMANDS:\n```\n```\n';
     Object.keys(commands).forEach(key => {
         res += `${commands[key].name} : ${commands[key].description}\n`;
     });
 
-    res += "👋"
+    res += "```\n👋"
 
     msg.channel.send(res);
 }
@@ -85,7 +85,7 @@ async function daily (msg, info) {
 
 async function report (msg) {
     const channel = (msg) ? msg.channel : bot.channels.get(process.env.REPORT_CHANNEL)
-    var res = 'REPORT:\n';
+    var res = '```css\nREPORT:\n```';
 
     let chars = await Character.allCharacters();
 

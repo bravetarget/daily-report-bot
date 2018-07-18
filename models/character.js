@@ -60,7 +60,7 @@ class Character extends Model {
             self.update({gold: self.data.gold});
             to.update({gold: to.data.gold});
 
-            resolve(this.data.name + ' gave ' + amt + ' gil to ' + to.data.name + '. <:hanks:350378992550936586>');
+            resolve(this.data.name + ' gave ' + amt + ' gold to ' + to.data.name + '. <:hanks:350378992550936586>');
         });
     }
 
