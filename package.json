@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "babel-node --presets env bot.js"
+    "start": "babel-node --presets env bot.js",
+    "docker": "docker build -t daily-report-bot . && docker run --env-file ./.env daily-report-bot"
   },
   "author": "",
   "license": "ISC"
