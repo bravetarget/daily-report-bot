@@ -68,7 +68,7 @@ function help (msg) {
 }
 
 async function daily (msg, info) {
-    if (!info) return;
+    if (!info) info = '***<attachment or external reference>***';
 
     let char = await RetrieveCharacter(msg.author);
 
@@ -85,7 +85,7 @@ async function daily (msg, info) {
 
 async function report (msg) {
     const channel = (msg) ? msg.channel : bot.channels.get(process.env.REPORT_CHANNEL)
-    var res = '```css\nREPORT:\n```';
+    var res = '```css\nREPORT:\n```\n';
 
     let chars = await Character.allCharacters();
 
@@ -123,7 +123,7 @@ async function optout (msg, info) {
 async function wallet (msg) {
     let char = await RetrieveCharacter(msg.author);
 
-    msg.channel.send(`${char.data.name} has ${char.data.gold} gold... 💰`);
+    msg.channel.send('```css\n' + `${char.data.name} has ${char.data.gold} gold... 💰` + '\n```');
 }
 
 async function gift (msg, info) {
@@ -170,7 +170,8 @@ function RetrieveCharacter (author) {
 }
 
 async function ProcessCommand (msg) {
-    let info = msg.content.replace(COMMAND_PREFIX, '').split(' ');
+    console.log(msg.content);
+    let info = msg.content.replace(COMMAND_PREFIX, '').replace('\n', ' ').trim().split(' ');
     let command = info.shift();
 
     console.log('COMMAND: ' + command);
