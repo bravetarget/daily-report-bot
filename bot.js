@@ -108,6 +108,8 @@ async function report (msg) {
 
 async function enlist (msg) {
     let char = await RetrieveCharacter(msg.author);
+    
+    msg.react("💪");
 
     char.update({enlisted: 1});
 }
