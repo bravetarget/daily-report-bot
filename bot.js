@@ -74,12 +74,17 @@ async function daily (msg, info) {
 
     msg.react("🔥");
 
+    let streak = char.data.streak || 0;
+
+    if (!char.data.checked_in) streak++;
+
     char.update({
-        contributions: char.data.contributions + 1, 
-        checked_in: 1, 
-        enlisted: 1, 
-        latest_update: info, 
-        streak: (char.data.streak == 0) ? 1 : char.data.streak
+        contributions: char.data.contributions + 1,
+        checked_in: 1,
+        demerits: 0,
+        enlisted: 1,
+        latest_update: info,
+        streak: streak
     });
 }
 
