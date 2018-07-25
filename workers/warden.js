@@ -40,11 +40,8 @@ export default class Warden {
                 char.update({demerits: demerits, previous_demerits: char.data.demerits, streak: 0});
             }
             else {
-                let streak = char.data.streak;
-                if (char.data.previous_demerits == char.data.demerits) streak++;
-
-                char.update({checked_in: 0, demerits: 0, previous_demerits: char.data.demerits, streak: streak});
-                char.addXP(100 + (142 * streak));
+                char.update({checked_in: 0, demerits: 0, previous_demerits: char.data.demerits});
+                char.addXP(100 + (142 * char.data.streak));
             }
                 
         });
