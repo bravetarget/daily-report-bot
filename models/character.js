@@ -37,7 +37,7 @@ class Character extends Model {
 
         console.log(this.data.name + " gained " + xp + "XP");
 
-        this.update({xp: this.data.xp, total_xp: this.data.total_xp, level: this.data.level});
+        this.update({xp: this.data.xp, total_xp: this.data.total_xp});
     }
 
     levelUp () {
@@ -47,6 +47,8 @@ class Character extends Model {
         this.data.gold += goldBonus;
 
         console.log(this.data.name + " leveled up!  They are now level " + this.data.level + " and gained " + goldBonus + " gold.");
+
+        this.update({level: this.data.level, gold: this.data.gold});
     }
 
     transferGold (to, amt) {
@@ -60,7 +62,7 @@ class Character extends Model {
             self.update({gold: self.data.gold});
             to.update({gold: to.data.gold});
 
-            resolve(this.data.name + ' gave ' + amt + ' gold to ' + to.data.name + '. <:hanks:350378992550936586>');
+            resolve('```css\n' + `${this.data.name} gave ${amt} gold to ${to.data.name}. 💸` + '\n```');
         });
     }
 
