@@ -17,10 +17,6 @@ export default class Model {
         
     }
 
-    model () {
-
-    }
-
     create() {
         if (external) {
             let model = this._model(this.data);
@@ -116,7 +112,10 @@ export default class Model {
                 }
                 table.findOne({[key]: value})
                 .then(doc => {
-                    console.log(doc);
+                    if (!doc) {
+                        reject('No data found');
+                        return;
+                    }
                     resolve(doc._doc);
                 }).catch(err => reject(err));
 
