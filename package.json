@@ -8,6 +8,7 @@
     "babel-preset-env": "^1.7",
     "discord.js": "latest",
     "dotenv": "^6.0.0",
+    "mongoose": "^5.2.6",
     "sqlite3": "^4.0.1"
   },
   "devDependencies": {},
