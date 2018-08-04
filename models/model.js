@@ -79,7 +79,10 @@ export default class Model {
             if (external) {
                 self.model.findOne({id: id})
                 .then(doc => {
-                    console.log(doc);
+                    if (!doc) {
+                        resolve(null);
+                        return;
+                    }
                     self.mapData(doc._doc);
                     resolve(self.data);
                 }).catch(err => console.log(err));
