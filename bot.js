@@ -102,9 +102,6 @@ async function report (msg) {
     Object.keys(chars).forEach(key => {
         let char = new Character(chars[key]);
 
-        console.log('reporting char');
-        console.log(char.data);
-
         if (!char.data.enlisted) return true;
 
         res += `**${char.data.name}** _Level ${char.data.level}_ — ` + 
@@ -182,7 +179,11 @@ function RetrieveCharacter (author) {
         char.findById(author.id).then(res => {
             if (!res || !Object.keys(res).length) {
                 char.mapData(Character.creationTemplate(author));
-                char.create();
+                char.create().then(() => {
+                    resolve(char);
+                });
+
+                return;
             }
 
             resolve(char);

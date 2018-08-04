@@ -18,22 +18,32 @@ export default class Model {
     }
 
     create() {
-        if (external) {
-            let model = this._model(this.data);
-            model.save().then(() => {
-                console.log('creating char');
-                console.log(this.data);
-            }).catch(er => console.log(er));
-            return;
-        }
+        return new Promise((resolve, reject) => {
+            if (external) {
+                let model = this._model(this.data);
+                model.save().then(() => {
+                    console.log('creating char');
+                    console.log(this.data);
 
-        let placeholders = Object.keys(this.data).map(() => '?').join(',');
-        let query = `INSERT INTO ${this.table} (${Object.keys(this.data).join(',')}) VALUES (${placeholders})`;
-        console.log(query);
-        
-        db.run(query, Object.values(this.data), err => {
-            console.log(err);
-        }); 
+                    resolve();
+                }).catch(er => reject(er));
+                
+                return;
+            }
+
+            let placeholders = Object.keys(this.data).map(() => '?').join(',');
+            let query = `INSERT INTO ${this.table} (${Object.keys(this.data).join(',')}) VALUES (${placeholders})`;
+            console.log(query);
+            
+            db.run(query, Object.values(this.data), err => {
+                if(err) {
+                    reject(err);
+                    return;
+                }
+
+                resolve();
+            }); 
+        });
     }
 
     update(data) {
