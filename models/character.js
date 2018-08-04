@@ -99,8 +99,13 @@ class Character extends Model {
     }
 
     static async byName(name) {
-        let data = await super.lookup(external ? 'characters' : ext, 'name', name);
-        return new Character(data);
+        try {
+            let data = await super.lookup(!external ? 'characters' : ext, 'name', name);
+            return new Character(data);
+        }
+        catch (er) {
+            console.log(er);
+        }
     }
 }
 

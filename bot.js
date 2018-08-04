@@ -90,7 +90,7 @@ async function daily (msg, info) {
 
 async function report (msg) {
     const channel = (msg) ? msg.channel : bot.channels.get(process.env.REPORT_CHANNEL)
-    var res = '```css\nREPORT:\n```\n';
+    var res = '```\nREPORT:\n```\n';
 
     let chars = await Character.allCharacters();
 
@@ -123,11 +123,21 @@ async function enlist (msg) {
 }
 
 async function optout (msg, info) {
-    let char = info ? await Character.byName(info) : await RetrieveCharacter(msg.author)
+    try {
+        let char = info ? await Character.byName(info) : await RetrieveCharacter(msg.author)
+        
+        if (char) {
+            char.update({enlisted: 0});
+            msg.channel.send(`${char.data.name} won't receive demerits from missing daily updates fyi`);
+        }
+        else msg.channel.send(`couldn't locate.. ${info} 🤔`);
+        
+    }
+    catch (er) {
+        console.log(er);
+    }
 
-    char.update({enlisted: 0});
-
-    if (msg.channel) msg.channel.send(`${char.data.name} won't receive demerits from missing daily updates fyi`);
+    
 }
 
 async function wallet (msg) {
