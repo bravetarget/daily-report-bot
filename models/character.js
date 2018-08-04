@@ -1,10 +1,16 @@
 import Model from './model'
 import db from '../config/database'
+import mongoose from 'mongoose'
+import ext from './_character'
+
+const external = (mongoose.connection.readyState === 1 || process.env.DB_SERVER);
 
 class Character extends Model {
     constructor (data) {
         super("characters");
         if (data) this.mapData(data);
+
+        this.model = ext;
     }
 
     static creationTemplate(author) {
@@ -21,6 +27,10 @@ class Character extends Model {
             streak: 0,
             level: 1,
         }
+    }
+
+    _model(data) {
+        return new ext(data);
     }
 
     addXP (xp) {
@@ -68,6 +78,15 @@ class Character extends Model {
 
     static allCharacters() {
         return new Promise((resolve, reject) => {
+            if (external) {
+                ext.find({})
+                .then(docs => {
+                    resolve(docs.map(doc => doc._doc));
+                }).catch(err => reject(err));
+
+                return;
+            }
+
             db.all('SELECT * FROM characters', (err, res) => {
                 if (err) {
                     reject(err);
@@ -80,7 +99,7 @@ class Character extends Model {
     }
 
     static async byName(name) {
-        let data = await super.lookup('characters', 'name', name);
+        let data = await super.lookup(external ? 'characters' : ext, 'name', name);
         return new Character(data);
     }
 }

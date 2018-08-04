@@ -1,10 +1,10 @@
 require('dotenv').load();
 
 var Discord = require("discord.js");
+import db from './config/database';
 import Character from './models/character';
 import Command from './models/command';
 import Warden from './workers/warden';
-import db from './config/database';
 
 var bot = new Discord.Client();
 const warden = new Warden();
@@ -102,6 +102,9 @@ async function report (msg) {
     Object.keys(chars).forEach(key => {
         let char = new Character(chars[key]);
 
+        console.log('reporting char');
+        console.log(char.data);
+
         if (!char.data.enlisted) return true;
 
         res += `**${char.data.name}** _Level ${char.data.level}_ — ` + 
@@ -162,11 +165,12 @@ async function gift (msg, info) {
 }
 
 function RetrieveCharacter (author) {
+
     return new Promise((resolve, reject) => {
         let char = new Character();
 
         char.findById(author.id).then(res => {
-            if (!res) {
+            if (!res || !Object.keys(res).length) {
                 char.mapData(Character.creationTemplate(author));
                 char.create();
             }
