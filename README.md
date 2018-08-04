@@ -4,10 +4,12 @@
 
 #### From Docker
 - Install `docker`
-- `docker run -dit --name=lloyd --restart always \
--e TOKEN=NDYxNjc4XXX2MzMwNDA2OTIy.XXXXX.lkmINsnj7qOvpTTpXXXrWGNWUJg \
--e REPORT_CHANNEL=45442443508343446516 -e AUTO_REPORTING=true -e REPORT_HOUR=18 \
--e DB_SERVER=ip:port -e DB_NAME=lloyd -e DB_USER=user -e DB_PASS=pass bravetarget/daily-report-bot`
+- ```
+  docker run -dit --name=lloyd --restart always \
+  -e TOKEN=NDYxNjc4XXX2MzMwNDA2OTIy.XXXXX.lkmINsnj7qOvpTTpXXXrWGNWUJg \
+  -e REPORT_CHANNEL=45442443508343446516 -e AUTO_REPORTING=true -e REPORT_HOUR=18 \
+  -e DB_SERVER=ip:port -e DB_NAME=lloyd -e DB_USER=user -e DB_PASS=pass bravetarget/daily-report-bot
+  ```
 
 #### From Source
 - Install `nodejs` v10+
