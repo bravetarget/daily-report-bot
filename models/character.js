@@ -1,7 +1,7 @@
 import Model from './model'
 import db from '../config/database'
 import mongoose from 'mongoose'
-import ext from './_character'
+import ext from './character.model'
 
 const external = (mongoose.connection.readyState === 1 || process.env.DB_SERVER);
 
