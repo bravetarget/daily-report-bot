@@ -15,18 +15,28 @@ export default class Warden {
 
     async check() {
         let date = new Date();
-        if (date.getDay() == 6 || date.getDay() == 0) return;
+        const dayOfWeek = date.getDay();
+        const includeWeekends = process.env.INCLUDE_WEEKENDS || false;
+        const isWeekend = dayOfWeek == 6 || dayOfWeek == 0;
+        const isTallyWeekend = dayOfWeek == 0 || dayOfWeek == 1;
+        const skipReporting = isWeekend ? includeWeekends : false; 
+        const skipTally = isTallyWeekend ? includeWeekends : false;
 
         if (process.env.AUTO_REPORTING 
+            && !skipReporting
             && typeof this.reporter == 'function'
             && date.getHours() == process.env.REPORT_HOUR 
             && date.getMinutes() == 0)
             this.reporter();
 
+        
+        if (skipTally) return;
 
-        let day = date.getDate();
-        if (day == this.day) return;
-        this.day = day;
+        let dayOfMonth = date.getDate();
+        if (dayOfMonth == this.day) return;
+        this.day = dayOfMonth;
+
+        console.log(`initiating tally for day ${this.day}`);
 
         let chars = await Character.allCharacters();
 
