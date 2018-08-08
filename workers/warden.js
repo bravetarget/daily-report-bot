@@ -29,12 +29,11 @@ export default class Warden {
             && date.getMinutes() == 0)
             this.reporter();
 
-        
-        if (skipTally) return;
-
         let dayOfMonth = date.getDate();
         if (dayOfMonth == this.day) return;
         this.day = dayOfMonth;
+
+        if (skipTally) return;
 
         console.log(`initiating tally for day ${this.day}`);
 
