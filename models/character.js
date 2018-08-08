@@ -72,7 +72,7 @@ class Character extends Model {
             self.update({gold: self.data.gold});
             to.update({gold: to.data.gold});
 
-            resolve('```css\n' + `${this.data.name} gave ${amt} gold to ${to.data.name}. 💸` + '\n```');
+            resolve('```css\n' + `${this.data.name} gave ${amt} gold to ${to.data.name}. 💰 -> 📀` + '\n```');
         });
     }
 
