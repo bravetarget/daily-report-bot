@@ -150,7 +150,16 @@ async function gift (msg, info) {
 
     var toChar = null; 
     try {
-        toChar = await Character.byName(cmds.join(' '));
+        let name = cmds.join(' ');
+        if (name.indexOf('<@') === 0) {
+            name = name.replace('<@', '').replace('>', '');
+            const char = new Character();
+            await char.findById(name);
+            toChar = char;
+        }
+        else 
+            toChar = await Character.byName(name);
+            
     } catch (er) { console.error(er); }
 
     if (!toChar) {
