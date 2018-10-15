@@ -217,8 +217,6 @@ async function ProcessCommand (msg) {
 async function ProcessMessage (msg) {
     var char = await RetrieveCharacter(msg.author);
 
-    xpValue = .42;
-
     var xpValue = msg.content.length / 10.42;
 
     if (msg.embeds && msg.embeds.length) xpValue += parseFloat(msg.embeds.length * 4.2); //images/youtube links bonus
