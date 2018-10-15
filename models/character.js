@@ -39,7 +39,7 @@ class Character extends Model {
         this.data.xp += xp;
         this.data.total_xp += xp;
 
-        let xpRequired = (this.data.level * 1.42) * 42;
+        let xpRequired = (this.data.level * 1.21) * 42;
         if (this.data.xp >= xpRequired) {
             this.data.xp -= xpRequired;
             this.levelUp();
